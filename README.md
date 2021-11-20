@@ -18,7 +18,6 @@ Conmeter is a web application where users can share their experiences on these w
 
 | LINK |
 | --- |
-| https://conmeter.com/ |
 | https://conmeter.herokuapp.com/ |
 
 ---
