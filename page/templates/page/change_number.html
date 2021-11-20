@@ -1,0 +1,33 @@
+{% extends "page/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div style="text-align: center;">
+            <img src="{% static "page/cm_light.png" %}" style="width: 100px;">
+            <br>
+            <br>
+            <br>
+            <h4>Enter your number:</h4>
+            <hr style="border-color: white; opacity: 70%;">
+        </div>
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+               <div class="input-group mb-3">
+  <input type="number" class="form-control" placeholder="Enter your number" id="num" name="num" required>
+  
+</div>
+                <div class="form-group" style="margin:auto; text-align:center;">
+                    <button class="btn btn-outline-info" type="submit">VERIFY</button>
+                
+                </div>
+            </form>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+{% endblock content %}

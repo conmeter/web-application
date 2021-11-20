@@ -1,0 +1,66 @@
+{% extends "page/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div style="text-align: center;">
+            <img src="{% static "page/cm_light.png" %}" style="width: 100px;">
+            <br>
+            <br>
+            <br>
+            <h4>Sign in to ConMeter</h4>
+            <hr style="border-color: white; opacity: 70%;">
+        </div>
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                    <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe">Remember
+                        me</label>
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit" onclick="lsRememberMe()">Login</button>
+                    <small class="text-muted ml-2">
+                        <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                    </small>
+                </div>
+            </form>
+        </div>
+        <br>
+        <div class="content-section">
+            <div style="font-size: 14px; text-align: center">
+                <small class='disabled'>New to ConMeter?</small>
+                <a href="{% url 'register' %}" style="text-decoration: none">
+                    Create an account.
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+<script>
+    const rmCheck = document.getElementById("rememberMe"),
+        emailInput = document.getElementById("div_id_username");
+
+    if (localStorage.checkbox && localStorage.checkbox !== "") {
+        rmCheck.setAttribute("checked", "checked");
+        emailInput.value = localStorage.username;
+    } else {
+        rmCheck.removeAttribute("checked");
+        emailInput.value = "";
+    }
+
+    function lsRememberMe() {
+        if (rmCheck.checked && emailInput.value !== "") {
+            localStorage.username = emailInput.value;
+            localStorage.checkbox = rmCheck.value;
+        } else {
+            localStorage.username = "";
+            localStorage.checkbox = "";
+        }
+    }
+</script>
+{% endblock content %}

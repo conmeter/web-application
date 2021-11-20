@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="icon" href="{% static 'page/favicon.ico' %}" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta property="og:logo" content="{% static 'page/cm_light.png' %}">
+    <title>ConMeter</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'page/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'page/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'page/css/grayscale.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <img src="{% static 'page/cm_dark.png' %}" alt="logo" style="width:40px;">
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#about">What is CM?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#projects">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="#signup">Contact</a>
+                    </li>
+                    {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'feed' %}">{{ user.name }}</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+                <h1 class="mx-auto my-0 text-uppercase">ConMeter</h1>
+                <br>
+                <div class="sls">
+                    <form class="form-inline d-flex" action="{% url 'search' %}">
+                        <input type="search" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0"
+                            placeholder="Search.." name="s_search" id="srch" required>
+                        <button type="submit" class="btn btn-primary mx-auto"><i class="fa fa-search"></i></button>
+                    </form>
+                </div>
+                <br>
+                <br>
+                <br>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">One place for all you needs</h2>
+                <a href="#about" class="btn btn-primary js-scroll-trigger">Know More</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about-section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="text-white mb-4">ConMeter</h2>
+                    <p class="text-white-50">Con Meter is a website created by the consumers for the consumers, we at
+                        Con
+                        Meter want to help consumers help to decide to trust a website or not.
+                        Conmeter is a highly reliable source for reviews on websites.</p>
+                </div>
+            </div>
+            <img src="{% static 'page/img/ipad.png' %}" class="img-fluid" alt="">
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section bg-light">
+        <div class="container">
+
+            <!-- Featured Project Row -->
+            <div class="row align-items-center no-gutters mb-4 mb-lg-5">
+                <div class="col-xl-8 col-lg-7">
+                    <img class="img-fluid mb-3 mb-lg-0" src="{% static 'page/img/story.jpg' %}" alt="">
+                </div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="featured-text text-center text-lg-left">
+                        <h4>The Story</h4>
+                        <p class="text-black-50 mb-0">
+                            CM was started by two college students who were sick of being ripped off by some
+                            websites and wanted a solution for this problem but couldn't find one.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project One Row -->
+            <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+                <div class="col-lg-6">
+                    <img class="img-fluid" src="{% static 'page/img/demo-image-01.jpg' %}" alt="">
+                </div>
+                <div class="col-lg-6">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-left">
+                                <h4 class="text-white">Help Us</h4>
+                                <p class="mb-0 text-white-50">We call out all consumers to help us maintain this
+                                    website
+                                    by providing
+                                    reviews.</p>
+                                <hr class="d-none d-lg-block mb-0 ml-0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Two Row -->
+            <div class="row justify-content-center no-gutters">
+                <div class="col-lg-6">
+                    <img class="img-fluid" src="{% static 'page/img/demo-image-02.jpg' %}" alt="">
+                </div>
+                <div class="col-lg-6 order-lg-first">
+                    <div class="bg-black text-center h-100 project">
+                        <div class="d-flex h-100">
+                            <div class="project-text w-100 my-auto text-center text-lg-right">
+                                <h4 class="text-white">Trust</h4>
+                                <p class="mb-0 text-white-50">We at CM trust our customers to provide accurate reviews
+                                    about
+                                    a website.</p>
+                                <hr class="d-none d-lg-block mb-0 mr-0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Signup Section -->
+    <section id="signup" class="signup-section">
+        <div class="container" >
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto text-center">
+
+                    <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+                    <h2 class="text-white mb-5">Not yet a part of ConMeter?</h2>
+                    <form class="form-inline d-flex" action="{% url 'register' %}">
+                        <button type="submit" class="btn btn-primary mx-auto">Click here to join us!</button>
+                    </form>
+
+
+                </div>
+                
+                
+            </div>
+            <div class="row">
+            <br>
+            <br>
+            <br>
+            </div>
+            <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto text-center">
+
+                   <i class="fas fa-pencil-alt fa-2x mb-2 text-white"></i>
+                    <h2 class="text-white mb-5" id="count_posts">{{ count }}</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section bg-black">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Address</h4>
+                            <hr class="my-4">
+                            <div class="small text-black-50">Hyderabad, India</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-envelope text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Email</h4>
+                            <hr class="my-4">
+                            <div class="small text-black-50">
+                                <a href="mailto:support@conmeter.com" target="_top">support@conmeter.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card py-4 h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                            <h4 class="text-uppercase m-0">Phone</h4>
+                            <hr class="my-4">
+                            <div class="small text-black-50">+91 8179058405</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social d-flex justify-content-center">
+                <a href="https://twitter.com/conmeterhq" class="mx-2">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="mx-2">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/conmeter/" class="mx-2">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black small text-center text-white-50">
+        <div class="container">
+            Copyright &copy; ConMeter 2019
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'page/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'page/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{% static 'page/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{% static 'page/js/grayscale.min.js' %}"></script>
+<script src="{% static 'page/count_ajax.js' %}"></script>
+</body>
+
+</html>

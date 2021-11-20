@@ -1,0 +1,237 @@
+{% extends "page/base.html" %}
+{% load static %}
+{% block content %}
+    <script src="{% static 'page/GaugeMeter.js' %}"></script>
+    <script src="{% static 'page/ajax.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $(".GaugeMeter").gaugeMeter();
+        });
+    </script>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="content-section side-nav">
+                <h3>Reviews By, <br> {{ view.kwargs.name }}</h3>
+                <p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">
+                        <small class="text-muted">Total reviews Generated <i class="fas fa-pen" aria-hidden="true" style="color: #007bff;"></i> : {{ page_obj.paginator.count }}</small>
+                    </li>
+                    <li class="list-group-item list-group-item-light">
+                        <small class="text-muted">Total Likes <i class="fa fa-heart fa_custom fa text-liked"></i> : <span id="cnt_l">{{ tot.sum_h }}</span></small>
+                    </li>
+                </ul>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% for post in posts %}
+                <article class="media content-section">
+                    <div class="media p-1">
+                        <div class="media-body">
+                            <div class="article-metadata">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <a class="mr-2 " href="{% url 'web-posts' post.web_url.name %}">
+                                            {{ post.web_url.name.title }}</a><br>
+                                        <small class="text-muted">Posted on {{ post.date_posted|date:"b d, Y" }}</small>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="like_heart" style="float:right;">
+                                            {% if user.is_authenticated %}
+                                                {% if request.user in post.user.all %}
+                                                    <a href="#" id="itemLike{{ post.post_id }}" data-rating=""><i
+                                                            class="fa fa-heart fa_custom fa text-liked"
+                                                            id="heart-icon{{ post.post_id }}"></i></a>
+                                                    <b id="like-count{{ post.post_id }}"
+                                                       class="like-count">{{ post.rating_count }}</b>
+                                                {% else %}
+                                                    <a href="#" id="itemLike{{ post.post_id }}" data-rating=""><i
+                                                            class="fa fa-heart-o fa_custom fa text-not-liked"
+                                                            id="heart-icon{{ post.post_id }}"></i></a>
+                                                    <b id="like-count{{ post.post_id }}"
+                                                       class="like-count">{{ post.rating_count }}</b>
+                                                {% endif %}
+                                            {% else %}
+                                                <a href="{% url 'login' %}"><i
+                                                        class="fa fa-heart-o fa_custom fa"></i></a>
+                                                <b id="like-count{{ post.post_id }}"
+                                                   class="like-count">{{ post.rating_count }}</b>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="dropdown" style="float:right;">
+                                            <a class="dropdown text-muted"
+                                               data-toggle="dropdown">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item">Report</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p>{{ post.review_text }}
+                            </p>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="row">
+                                        <div class="col" style="text-align: center;">
+                                            <small >Reliability
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.reliability_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                        <div class="col" style="text-align: center;">
+                                            <small >Design
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.design_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                        <div class="col" style="text-align: center;">
+                                            <small >UI
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.ui_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                        <div class="col" style="text-align: center;">
+                                            <small >Speed
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.speed_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                        <div class="col" style="text-align: center;">
+                                            <small >Support
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.support_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                        <div class="col" style="text-align: center;">
+                                            <small >Quality
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.qoc_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                        <div class="col" style="text-align: center;">
+                                            <small >Trust
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.trust_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                        <div class="col" style="text-align: center;">
+                                            <small >Compatibility
+                                                <div class="GaugeMeter" id="GaugeMeter_1"
+                                                     data-used="{{ post.compatibility_rating }} "
+                                                     data-total="5" data-style="Arch" data-size="50"
+                                                     style="margin:auto;"
+                                                     data-label_color="#ffffff"
+                                                     data-animate_text_colors="true">
+                                                </div>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="text-align: center;">
+                                    <br>
+                                    <div class="GaugeMeter" id="GaugeMeter_1"
+                                         data-percent="{{ post.total_rating_value|floatformat:"0" }}"
+                                         data-theme="Red-Gold-Green"
+                                         data-text="{{ post.total_rating_value|floatformat:"2" }}" data-width="8"
+                                         data-style="Full"
+                                         data-stripe="2" data-size="100" data-text_size="0.2"
+                                         data-label="ConMeter"
+                                         data-label_color="#ffffff"
+                                         data-animate_text_colors="true" style="margin: auto"></div>
+
+                                    {% if post.total_rating_value >= 66 %}
+                                        <small class="text-muted">Trust Worthy</small>
+                                    {% endif %}
+                                    {% if post.total_rating_value >= 33 and post.total_rating_value < 66 %}
+                                        <small class="text-muted">Shaddy</small>
+                                    {% endif %}
+                                    {% if post.total_rating_value > 0 and post.total_rating_value < 33 %}
+                                        <small class="text-muted">Very Shaddy</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                                                                    <div class="post-image">
+                        {% if post.image %}
+<a class="example-image-link" href="{{ post.image.url }}" data-lightbox="example-1"><img class="example-image" src="{{ post.image.url }}" alt="" style="width:25px;height:25px;"></a>
+{% endif %}
+</div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="col-md-3">
+            <div class="content-section side-nav">
+                <h3>Services We Provide!</h3>
+                <p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">
+                        <a href="#">Announcements</a>
+                    </li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

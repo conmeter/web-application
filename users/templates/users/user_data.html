@@ -1,0 +1,44 @@
+{% extends "page/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="dd" style="margin:auto;">
+    <h4></h4>
+    <div class='row' style="margin:auto;">
+        <div class='col-md-4 mb-3 mb-md-0"'>
+            <div class="card" style="width:350px; background-color:#1f1f1f;">
+  <img class="card-img-top" src="{% static 'page/used.jpg' %}" alt="Card image" style="height:300px;">
+  <div class="card-body text-center">
+    <h4 class="card-title" style="color: #007bff;">Download Your details</h4>
+    <p class="card-text" style="color: #007bff;">Get the details conmeter has on you</p>
+    <a href="{% url 'download-data-user' %}" class="btn btn-primary">Click Here</a>
+  </div>
+</div>
+        </div>
+        <div class='col-md-4 mb-3 mb-md-0"'>
+                   <div class="card" style="width:350px; background-color:#1f1f1f;">
+  <img class="card-img-top" src="{% static 'page/post.jpg' %}" alt="Card image" style="height:300px;">
+  <div class="card-body text-center">
+    <h4 class="card-title" style="color: #007bff;">Download Your posts</h4>
+    <p class="card-text" style="color: #007bff;">Download all the posts on your profile</p>
+    <a href="{% url 'download-data-posts' %}" class="btn btn-primary">Click Here</a>
+  </div>
+</div>
+
+
+        </div>
+        <div class='col-md-4 mb-3 mb-md-0"'>
+
+                        <div class="card" style="width:350px; background-color:#1f1f1f;">
+  <img class="card-img-top" src="{% static 'page/isue.jpg' %}" alt="Card image" style="height:300px;">
+  <div class="card-body text-center">
+    <h4 class="card-title" style="color: #007bff;">Download Your issues</h4>
+    <p class="card-text" style="color: #007bff;">Download all the issues submitted by you</p>
+    <a href="{% url 'download-data-issues' %}" class="btn btn-primary">Click Here</a>
+  </div>
+</div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,137 @@
+
+<html>
+<head>
+<title>DATA</title>
+    <style>
+         table, td, th {
+            border: 1px solid black;
+            width: 300px;
+             text-align: center;
+  vertical-align: middle;
+         }
+         td, th{
+            padding-top:2px;
+         }
+  table {
+    background-color: #b9bdba;
+    color: black;
+  }
+  .content-section {
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+.cus-content-section {
+    background: black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+         
+      </style>
+ </head>
+<body>
+<header style="text-align: center">
+<img src="http://127.0.0.1:8000/static/page/cm_dark.png" alt="logo" height="100px" width="180px">
+    <h1> CONMETER</h1>
+    <h4>USER DEATILS</h4>
+    <hr>
+</header>
+<h2>USER DETAILS:</h2>
+<table border="1">
+{% for i in user %}
+<tr>
+<td>EMAIL:</td>
+<td>{{ i.email }}</td>
+</tr>
+<tr>
+<td>NAME:</td>
+<td>{{ i.name }}</td>
+</tr>
+<tr>
+<td>PHONE NUMBER:</td>
+<td>{{ i.phone }}</td>
+</tr>
+<tr>
+<td>DOB:</td>
+<td>{{ i.dob }}</td>
+</tr>
+<tr>
+<td>LAST LOGIN:</td>
+<td>{{ i.last_login }}</td>
+</tr>
+<tr>
+<td>DATE JOINED:</td>
+<td>{{ i.date_joined }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h2>ISSUE DETAILS:</h2>
+
+{% for i in issue %}
+ <article class="media content-section">
+                        <div class="media-body">
+                            <div class="article-metadata">
+                                <p>{{ i.issue_head }}</p>
+                            </div>
+                            <div>
+                            <small class="text-muted">
+                                ID: {{ i.issue_id }}
+                                </small>
+                                <small class="text-muted">
+                                POST ID: {{ i.post_id }}
+                                </small>
+                                <small class="text-muted">
+                                ISSUE: {{ i.issue_body }}
+                                </small>
+                            </div>
+                        </div>
+                    </article>
+{% endfor %}
+
+
+
+ <h2>POST DETAILS:</h2>
+ <table border="1">
+ <thead>
+ <tr>
+ <th>URL</th>
+ <th>REVIEW</th>
+ <th>DATE</th>
+ <th>DESIGN</th>
+ <th>UI</th>
+ <th>SPEED</th>
+ <th>QOC</th>
+ <th>RELIAB LILITY</th>
+ <th>COMPAT ABILITY</th>
+ <th>SUPPORT</th>
+ <th>TRUST</th>
+ <th>TOTAL</th>
+ <th>LIKES</th>
+ </tr>
+ </thead>
+ <tbody>
+ {% for i in posts %}
+ <tr>
+ <td>{{ i.web_url }}</td>
+ <td>{{ i.review_text }}</td>
+  <td>{{ i.date_posted }}</td>
+   <td>{{ i.design_rating }}</td>
+    <td>{{ i.ui_rating }}</td>
+     <td>{{ i.speed_rating }}</td>
+      <td>{{ i.qoc_rating }}</td>
+       <td>{{ i.reliability_rating }}</td>
+        <td>{{ i.compatibility_rating }}</td>
+         <td>{{ i.support_rating }}</td>
+          <td>{{ i.trust_rating }}</td>
+           <td>{{ i.total_rating_value }}</td>
+            <td>{{ i.rating_count }}</td>
+ </tr>
+ {% endfor %}
+ </tbody>
+ </table>
+</body>
+</html>

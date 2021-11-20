@@ -1,0 +1,72 @@
+{% extends "page/base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            {% if webs.exists %}
+                {% for web in webs %}
+                    <article class="media content-section">
+                        <div class="media-body">
+                            <div class="article-metadata">
+                                <a href="{% url 'web-posts' web.name %}">{{ web.name.title }}</a>
+                            </div>
+                            <div>
+                                <small class="text-muted">Visit the wesite at:
+                                    <a href="http://{{ web.url }}" target="_blank">{{ web.url }}</a>
+                                </small>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <article class="media content-section">
+                    <div class="media-left">
+                        <p><i class='far fa-frown' style='font-size:20px;color:black'></i>
+                        <p>Looks like there are no results for your search <h4>"{{ request.GET.s_search }}"</h4>
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}">Login to add</a>
+                        {% endif %}
+                        </p>
+                    </div>
+                </article>
+            {% endif %}
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-outline-info mb-4" href="?page=1&s_search={{ request.GET.s_search }}">First</a>
+                    <a class="btn btn-outline-info mb-4"
+                       href="?page={{ page_obj.previous_page_number }}&s_search={{ request.GET.s_search }}">Previous</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4"
+                           href="?page={{ num }}&s_search={{ request.GET.s_search }}">{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4"
+                           href="?page={{ num }}&s_search={{ request.GET.s_search }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <a class="btn btn-outline-info mb-4"
+                       href="?page={{ page_obj.next_page_number }}&s_search={{ request.GET.s_search }}">Next</a>
+                    <a class="btn btn-outline-info mb-4"
+                       href="?page={{ page_obj.paginator.num_pages }}&s_search={{ request.GET.s_search }}">Last</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            {% if user.is_authenticated %}
+                {% if not webs.exists %}
+                    <div class="content-section">
+                        <h4 style="text-align: center">No results found?</h4>
+                        <p>
+                            <a href="{% url 'add_web' %}">
+                                <button type="button" class="btn btn-primary btn-block">Add it here</button>
+                            </a>
+
+                        </p>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

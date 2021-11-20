@@ -1,0 +1,61 @@
+{% extends "page/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block css %}
+<script>
+var countdown = 2 * 60 * 1000;
+var timerId = setInterval(function(){
+  countdown -= 1000;
+  var min = Math.floor(countdown / (60 * 1000));
+  var sec = Math.floor((countdown - (min * 60 * 1000)) / 1000);
+  if (countdown <= 0) {
+     $("#countTime").html("");
+      $('#myBtn').prop('disabled', false);
+  } else {
+     $("#countTime").html(min + " : " + sec);
+  }
+}, 1000);
+
+</script>
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div style="text-align: center;">
+            <img src="{% static "page/cm_light.png" %}" style="width: 100px;">
+            <br>
+            <br>
+            <br>
+            <h4>Enter OTP Sent TO : {{ phno }}</h4>
+            <hr style="border-color: white; opacity: 70%;">
+        </div>
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}  
+               <div class="input-group mb-3">
+  <input type="number"  class="form-control" placeholder="OTP" id="otp" name="otp" required>
+  
+</div>
+                <div class="form-group" style="margin:auto; text-align:center;">
+                  <button class="btn btn-outline-info" type="submit">VERIFY</button>
+                    <br>
+                </div>
+                   <div class="form-group" style="margin:auto; text-align:center;">
+                   <br>
+                <small>  <a href="{% url 'resend_otp' %}"><button class="btn btn-outline-info btn-sm" type="button" id="myBtn" disabled>RESEND OTP</button>
+                </a>
+                <br>
+                <small style="color:red;" id="countTime"></small>
+                
+                <br>
+                </small>
+                <a href="{% url 'change_number' %}"><small>Not your number? Chick here to change it.</small></a>
+                </div>
+            </form>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+{% endblock content %}
